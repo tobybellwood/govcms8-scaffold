@@ -2,3 +2,10 @@ FROM govcms8lagoon/govcms8
 
 COPY themes/ /app/web/themes/custom
 COPY config /app/config
+
+RUN composer config repositories.grasmash/composerize-drupal vcs git@github.com:grasmash/composerize-drupal.git \
+  && composer require grasmash/composerize-drupal:dev-core-version \
+  && cd /app \
+  && composer -v composerize-drupal --composer-root=/app --drupal-root=/app/web --no-update --exact-versions
+
+RUN composer require drupal/dvf drupal/ckan_connect
